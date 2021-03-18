@@ -22,7 +22,7 @@ public:
 	void PopState();
 
 	void HandleEvents(sf::Event e);
-	void Update();
+	void Update(const float& dt);
 	void Display();
 
 private:

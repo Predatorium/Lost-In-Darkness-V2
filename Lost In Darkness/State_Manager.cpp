@@ -1,8 +1,11 @@
 #include "State_Manager.h"
 #include "State.h"
+#include "Menu.h"
 
-State_Manager::State_Manager(sf::RenderWindow* _window) : window{ _window }
+State_Manager::State_Manager(sf::RenderWindow* _window) : window(_window)
 {
+	ChangeState<Menu>(this, window);
+
 	for (int i = 0; i < 5; i++)
 	{
 		Shape[i].setRadius(i + 1 * 3);
@@ -39,7 +42,7 @@ void State_Manager::HandleEvents(sf::Event e)
 			states.top()->HandleEvents(e);
 }
 
-void State_Manager::Update()
+void State_Manager::Update(const float& dt)
 {
 	if (Check_Mutex)
 	{
@@ -49,7 +52,7 @@ void State_Manager::Update()
 	else if (!Check_Mutex)
 	{
 		if (!states.empty() && states.top())
-			states.top()->Update();
+			states.top()->Update(dt);
 	}
 }
 

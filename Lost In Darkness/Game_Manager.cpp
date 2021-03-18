@@ -10,16 +10,16 @@ Game_Manager::Game_Manager(sf::VideoMode _videomode, std::string _name, sf::Uint
 
 void Game_Manager::GameLoop()
 {
-	sf::Event Event;
-
 	while (window.isOpen())
 	{
 		try
 		{
 			Time.RestartClock();
 
-			state_manager.HandleEvents(Event);
-			state_manager.Update();
+			for (auto e = sf::Event{}; window.pollEvent(e);) {
+				state_manager.HandleEvents(e);
+			}
+			state_manager.Update(Time.Get_TimeDeltaF());
 			
 
 			state_manager.Display();

@@ -10,7 +10,7 @@ public:
 	virtual void Resume() = 0;
 
 	virtual void HandleEvents(sf::Event e) = 0;
-	virtual void Update() = 0;
+	virtual void Update(const float& dt) = 0;
 	virtual void Display() = 0;
 
 protected:

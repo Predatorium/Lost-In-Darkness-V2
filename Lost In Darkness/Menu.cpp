@@ -31,23 +31,20 @@ Menu::Menu(State_Manager* game, sf::RenderWindow* _window) : State(game, _window
 
 void Menu::HandleEvents(sf::Event e)
 {
-	while (window->pollEvent(e))
+	switch (e.type)
 	{
-		switch (e.type)
-		{
-		case sf::Event::Closed:
-			window->close();
-			break;
-		case sf::Event::KeyPressed:
+	case sf::Event::Closed:
+		window->close();
+		break;
+	case sf::Event::KeyPressed:
 
-			break;
-		default:
-			break;
-		}
+		break;
+	default:
+		break;
 	}
 }
 
-void Menu::Update()
+void Menu::Update(const float& dt)
 {
 	for (Button& Current : Bouton)
 	{

@@ -89,22 +89,18 @@ void Fight::Turn_Order()
 
 void Fight::HandleEvents(sf::Event e)
 {
-	sf::Event Event;
-	while (window->pollEvent(e))
+	switch (e.type)
 	{
-		switch (Event.type)
-		{
-		case sf::Event::Closed:
-			window->close();
-			break;
-		case sf::Event::KeyPressed:
-			if (Event.key.code == sf::Keyboard::Key::Escape)
-				Game->ChangeState<Menu>(Game, window);
+	case sf::Event::Closed:
+		window->close();
+		break;
+	case sf::Event::KeyPressed:
+		if (e.key.code == sf::Keyboard::Key::Escape)
+			Game->ChangeState<Menu>(Game, window);
 
-			break;
-		default:
-			break;
-		}
+		break;
+	default:
+		break;
 	}
 
 	if (Enemy.size() == 0)
@@ -113,7 +109,7 @@ void Fight::HandleEvents(sf::Event e)
 		Game->ChangeState<Menu>(Game, window);
 }
 
-void Fight::Update()
+void Fight::Update(const float& dt)
 {
 	if (turn >= Enemy.size() + player.Get_Squad().size() + 1)
 	{
@@ -200,7 +196,7 @@ void Fight::Update()
 				}
 			}
 
-			timer += _time->Get_TimeDeltaF();
+			timer += dt;
 
 			if (Enemy_Selection == 0)
 				Enemy_Selection = irandom(1, player.Get_Squad().size());
