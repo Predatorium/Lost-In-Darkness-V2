@@ -13,21 +13,168 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Fichiers sources\Global">
+      <UniqueIdentifier>{f4642b5b-4523-4411-a662-6f586026e08d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\Global">
+      <UniqueIdentifier>{ad06704b-90c6-4f84-ad5a-6aa20cc4d379}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\HUD">
+      <UniqueIdentifier>{09ee14a5-7fe1-41b0-885a-45fa2366e100}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\HUD">
+      <UniqueIdentifier>{15d267e4-f326-4d9c-911a-dd485c8d7edc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\State">
+      <UniqueIdentifier>{6db2300f-2ba4-46b3-a170-b5df1f7a3159}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\State">
+      <UniqueIdentifier>{eb2e0e97-56fe-4708-8b89-2bda079f0981}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\ECS%28Entity, Component, System%29">
+      <UniqueIdentifier>{64b8acae-7742-470f-a8f5-5c29afea14e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\ECS%28Entity, Component, System%29">
+      <UniqueIdentifier>{cd15063c-be55-426d-b384-f183c3771257}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\ECS%28Entity, Component, System%29\Entity">
+      <UniqueIdentifier>{8362a821-c79a-4c9c-959d-5b455d326952}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\ECS%28Entity, Component, System%29\Entity\Character">
+      <UniqueIdentifier>{fa57bb86-a644-4227-bf3c-fa567863eab5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\ECS%28Entity, Component, System%29\Entity">
+      <UniqueIdentifier>{36af23c2-c85f-40db-9ac5-f8a51fb109a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\ECS%28Entity, Component, System%29\Entity\Character">
+      <UniqueIdentifier>{1c179c92-431a-44f2-83cd-196f5e2a123c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\ECS%28Entity, Component, System%29\Component">
+      <UniqueIdentifier>{d6f3c10c-c1a6-46bb-a514-0521f2df8392}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\ECS%28Entity, Component, System%29\Component">
+      <UniqueIdentifier>{d86128ac-8f59-4bc4-9713-b4a8595cc563}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\Global\Prototype">
+      <UniqueIdentifier>{1e0e3ded-22f9-4a52-8994-391b5d580130}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\Global\Prototype">
+      <UniqueIdentifier>{10970a08-b9f2-4f0f-aaed-fc1260bdfd4f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="State.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="State_Manager.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
+    <ClCompile Include="Main.cpp">
+      <Filter>Fichiers sources\Global</Filter>
+    </ClCompile>
+    <ClCompile Include="Character.cpp">
+      <Filter>Fichiers sources\ECS%28Entity, Component, System%29\Entity\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Mercenary.cpp">
+      <Filter>Fichiers sources\ECS%28Entity, Component, System%29\Entity\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster.cpp">
+      <Filter>Fichiers sources\ECS%28Entity, Component, System%29\Entity\Character</Filter>
+    </ClCompile>
     <ClCompile Include="State.cpp">
-      <Filter>Fichiers sources</Filter>
+      <Filter>Fichiers sources\State</Filter>
     </ClCompile>
     <ClCompile Include="State_Manager.cpp">
-      <Filter>Fichiers sources</Filter>
+      <Filter>Fichiers sources\State</Filter>
     </ClCompile>
+    <ClCompile Include="Menu.cpp">
+      <Filter>Fichiers sources\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Fichiers sources\Global</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>Fichiers sources\ECS%28Entity, Component, System%29\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Fight.cpp">
+      <Filter>Fichiers sources\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect.cpp">
+      <Filter>Fichiers sources\ECS%28Entity, Component, System%29\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Game_Manager.cpp">
+      <Filter>Fichiers sources\Global</Filter>
+    </ClCompile>
+    <ClCompile Include="Ressource_Manager.cpp">
+      <Filter>Fichiers sources\Global</Filter>
+    </ClCompile>
+    <ClCompile Include="Skill.cpp">
+      <Filter>Fichiers sources\ECS%28Entity, Component, System%29\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Component.cpp">
+      <Filter>Fichiers sources\ECS%28Entity, Component, System%29\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>Fichiers sources\HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="Merce_Box.cpp">
+      <Filter>Fichiers sources\Global\Prototype</Filter>
+    </ClCompile>
+    <ClCompile Include="Tools.cpp">
+      <Filter>Fichiers sources\Global</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Tools.h">
+      <Filter>Fichiers d%27en-tête\Global</Filter>
+    </ClInclude>
+    <ClInclude Include="Character.h">
+      <Filter>Fichiers d%27en-tête\ECS%28Entity, Component, System%29\Entity\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Mercenary.h">
+      <Filter>Fichiers d%27en-tête\ECS%28Entity, Component, System%29\Entity\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster.h">
+      <Filter>Fichiers d%27en-tête\ECS%28Entity, Component, System%29\Entity\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Menu.h">
+      <Filter>Fichiers d%27en-tête\State</Filter>
+    </ClInclude>
+    <ClInclude Include="State.h">
+      <Filter>Fichiers d%27en-tête\State</Filter>
+    </ClInclude>
+    <ClInclude Include="State_Manager.h">
+      <Filter>Fichiers d%27en-tête\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Fichiers d%27en-tête\Global</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>Fichiers d%27en-tête\ECS%28Entity, Component, System%29\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Fight.h">
+      <Filter>Fichiers d%27en-tête\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect.h">
+      <Filter>Fichiers d%27en-tête\ECS%28Entity, Component, System%29\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Game_Manager.h">
+      <Filter>Fichiers d%27en-tête\Global</Filter>
+    </ClInclude>
+    <ClInclude Include="Ressource_Manager.h">
+      <Filter>Fichiers d%27en-tête\Global</Filter>
+    </ClInclude>
+    <ClInclude Include="Skill.h">
+      <Filter>Fichiers d%27en-tête\ECS%28Entity, Component, System%29\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Component.h">
+      <Filter>Fichiers d%27en-tête\ECS%28Entity, Component, System%29\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Times.h">
+      <Filter>Fichiers d%27en-tête\Global</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>Fichiers d%27en-tête\HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="Box.h">
+      <Filter>Fichiers d%27en-tête\Global\Prototype</Filter>
+    </ClInclude>
+    <ClInclude Include="Merce_Box.h">
+      <Filter>Fichiers d%27en-tête\Global\Prototype</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
