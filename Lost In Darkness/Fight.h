@@ -2,10 +2,9 @@
 #include "State.h"
 #include "Player.h"
 #include "Button.h"
-#include "Monster.h"
-#include "Times.h"
 #include <list>
 #include "Merce_Box.h"
+#include "Monster_Box.h"
 
 class Fight : public State
 {
@@ -21,7 +20,8 @@ private :
 	int Skill_Select;
 	bool EffectUpdate;
 
-	Merce_Box m_Box;
+	Merce_Box Me_Box;
+	Monster_Box Mo_Box;
 
 	enum class Etape
 	{

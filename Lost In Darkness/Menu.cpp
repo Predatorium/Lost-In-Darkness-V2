@@ -1,7 +1,7 @@
 #include "Menu.h"
 #include "State_Manager.h"
 #include "Ressource_Manager.h"
-#include "Fight.h"
+#include "Headquarter.h"
 #include "Tools.h"
 
 Menu::Menu(State_Manager* game, sf::RenderWindow* _window) : State(game, _window)
@@ -9,14 +9,14 @@ Menu::Menu(State_Manager* game, sf::RenderWindow* _window) : State(game, _window
 	Bouton.clear();
 	Selection = 0;
 	timer = 0;
-	font = Ressource_Manager::AddAnyRessources<sf::Font>("../Ressources/Fonts/MetalMacabre.ttf");
-	sprite.setTexture(Ressource_Manager::AddAnyRessources<sf::Texture>("../Ressources/Main_Menu.jpg"));
+	font = Ressource_Manager::AddAnyRessources<sf::Font>("MetalMacabre");
+	sprite.setTexture(Ressource_Manager::AddAnyRessources<sf::Texture>("Main_Menu"));
 
 	Title = Button(CreateText("Lost In Darkness", font, 150), 5.f, sf::Vector2f(960, 120), sf::Color::White,
 		sf::Color::Transparent, [] {return 0; });
 
 	Bouton.push_back(Button(CreateText("New Game", font, 70), 3, sf::Vector2f(480, 530), sf::Color::White,
-		sf::Color::Transparent, [game, _window] {game->ChangeState<Fight>(game, _window); return 0; }));
+		sf::Color::Transparent, [game, _window] {game->PushState<Headquarter>(game, _window); return 0; }));
 
 	Bouton.push_back(Button(CreateText("Load Game", font, 70), 3, sf::Vector2f(480, 658), sf::Color::White,
 		sf::Color::Transparent, [game, _window] {game->ChangeState<Menu>(game, _window); return 0; }));

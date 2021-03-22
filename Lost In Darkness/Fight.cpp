@@ -7,23 +7,24 @@
 Fight::Fight(State_Manager* game, sf::RenderWindow* _window) : State(game, _window)
 {
 	std::list<Mercenary> tmp;
-	tmp.push_back(m_Box.Get_Box(Mercenary::Type::Assasin));
-	tmp.push_back(m_Box.Get_Box(Mercenary::Type::Chevalier));
-	tmp.push_back(m_Box.Get_Box(Mercenary::Type::Pretre));
-	tmp.push_back(m_Box.Get_Box(Mercenary::Type::Sorcier));
+	tmp.push_back(Me_Box.Get_Box(Mercenary::Type::Assasin));
+	tmp.push_back(Me_Box.Get_Box(Mercenary::Type::Chevalier));
+	tmp.push_back(Me_Box.Get_Box(Mercenary::Type::Pretre));
+	tmp.push_back(Me_Box.Get_Box(Mercenary::Type::Sorcier));
 	player = Player(tmp);
 
-	Enemy.push_back(Entity::Create<Monster>("Ghoul", 30, sf::Vector2i(10, 12), 15, 20, 20, 15, Monster::Type::Ghoul));
-	Enemy.push_back(Entity::Create<Monster>("Ghoul", 30, sf::Vector2i(10, 12), 15, 20, 20, 15, Monster::Type::Ghoul));
-	Enemy.push_back(Entity::Create<Monster>("Ghoul", 30, sf::Vector2i(10, 12), 15, 20, 20, 15, Monster::Type::Ghoul));
-	Enemy.push_back(Entity::Create<Monster>("Ghoul", 30, sf::Vector2i(10, 12), 15, 20, 20, 15, Monster::Type::Ghoul));
+	Enemy.push_back(Mo_Box.Get_Box(Monster::Type::Ghoul));
+	Enemy.push_back(Mo_Box.Get_Box(Monster::Type::Ghoul));
+	Enemy.push_back(Mo_Box.Get_Box(Monster::Type::Ghoul));
+	Enemy.push_back(Mo_Box.Get_Box(Monster::Type::Ghoul));
 
-	font = Ressource_Manager::AddAnyRessources<sf::Font>("../Ressources/Fonts/Vamp.ttf");
-	sprite.setTexture(Ressource_Manager::AddAnyRessources<sf::Texture>("../Ressources/Fight.jpg"));
+	font = Ressource_Manager::AddAnyRessources<sf::Font>("Vamp");
+	sprite.setTexture(Ressource_Manager::AddAnyRessources<sf::Texture>("Fight"));
 
-	Bouton.push_back(Button(CreateText("Skill : 1", font, 30), 2, { 240 , 850 }, sf::Color::White, sf::Color::Transparent, [] {return 0; }));
+	Bouton.push_back(Button(CreateText("Skill : 1", font, 30), 2, { 240 , 850 },
+		sf::Color::White, sf::Color::Transparent, [this] {Skill_Select = 0; return 0; }));
 	Bouton.push_back(Button(CreateText("Skill : 2", font, 30), 2, { Bouton.back().Get_Shape().getPosition().x + 120,
-		Bouton.back().Get_Shape().getPosition().y }, sf::Color::White, sf::Color::Transparent, [] {return 1; }));
+		Bouton.back().Get_Shape().getPosition().y }, sf::Color::White, sf::Color::Transparent, [this] {Skill_Select = 1; return 0; }));
 
 	int i = 1;
 	for (Mercenary& Current : player.Get_Squad())
@@ -96,7 +97,7 @@ void Fight::HandleEvents(sf::Event e)
 		break;
 	case sf::Event::KeyPressed:
 		if (e.key.code == sf::Keyboard::Key::Escape)
-			Game->ChangeState<Menu>(Game, window);
+			Game->PopState();
 
 		break;
 	default:
@@ -104,29 +105,26 @@ void Fight::HandleEvents(sf::Event e)
 	}
 
 	if (Enemy.size() == 0)
-		Game->ChangeState<Menu>(Game, window);
+		Game->PopState();
 	if (player.Get_Squad().size() == 0)
-		Game->ChangeState<Menu>(Game, window);
+		Game->PopState();
 }
 
 void Fight::Update(const float& dt)
 {
-	if (turn >= Enemy.size() + player.Get_Squad().size() + 1)
+	if (turn > Enemy.size() + player.Get_Squad().size())
 	{
 		Turn_Order();
 		turn = 1;
 	}
 
 	for (Mercenary& Current : player.Get_Squad())
-		if (Current.Get_TurnOrder() == turn)
-		{
-			if (EffectUpdate == false)
-			{
+		if (Current.Get_TurnOrder() == turn) {
+			if (EffectUpdate == false) {
 				Current.Effect_Update();
 				EffectUpdate = true;
 
-				if (Current.Get_Life() == 0)
-				{
+				if (Current.Get_Life() == 0) {
 					player.Get_Squad().remove_if([](Mercenary& m) {return m.Get_Life() == 0; });
 					Turn_Order();
 					break;
@@ -137,7 +135,7 @@ void Fight::Update(const float& dt)
 				if (Skill_Select != -1)	{
 					if (Current.Get_Skill(Skill_Select).Get_Type() == Skill::Type::Ennemy)
 						for (Monster& Current2 : Enemy)
-							if (Current2.tmp.getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition()))){
+							if (Current2.tmp.getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition()))) {
 								Current.Attack(Current2, Skill_Select);
 								turn++;
 
@@ -151,7 +149,7 @@ void Fight::Update(const float& dt)
 
 					if (Current.Get_Skill(Skill_Select).Get_Type() == Skill::Type::Ally)
 						for (Mercenary& Current2 : player.Get_Squad())
-							if (Current2.tmp.getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition()))){
+							if (Current2.tmp.getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition()))) {
 								Current.Buff(Current2, Skill_Select);
 								turn++;
 
@@ -164,7 +162,7 @@ void Fight::Update(const float& dt)
 				int i = 0;
 				for (Button& Current2 : Bouton)	{
 					Current2.Set_Text(Current.Get_Skill(i).Get_Name());
-					if (Current2.Get_Shape().getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition()))){
+					if (Current2.Get_Shape().getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition()))) {
 						Skill_Select = Current2.Update();
 						break;
 					}

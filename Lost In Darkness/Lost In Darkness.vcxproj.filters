@@ -117,6 +117,12 @@
     <ClCompile Include="Tools.cpp">
       <Filter>Fichiers sources\Global</Filter>
     </ClCompile>
+    <ClCompile Include="Headquarter.cpp">
+      <Filter>Fichiers sources\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster_Box.cpp">
+      <Filter>Fichiers sources\Global\Prototype</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Tools.h">
@@ -174,6 +180,12 @@
       <Filter>Fichiers d%27en-tête\Global\Prototype</Filter>
     </ClInclude>
     <ClInclude Include="Merce_Box.h">
+      <Filter>Fichiers d%27en-tête\Global\Prototype</Filter>
+    </ClInclude>
+    <ClInclude Include="Headquarter.h">
+      <Filter>Fichiers d%27en-tête\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster_Box.h">
       <Filter>Fichiers d%27en-tête\Global\Prototype</Filter>
     </ClInclude>
   </ItemGroup>

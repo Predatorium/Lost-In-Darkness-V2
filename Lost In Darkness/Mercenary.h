@@ -4,13 +4,7 @@
 class Mercenary : public Character
 {
 public :
-	enum class Type
-	{
-		Chevalier,
-		Pretre,
-		Sorcier,
-		Assasin,
-	};
+	enum class Type { Chevalier, Pretre, Sorcier, Assasin, };
 
 	Mercenary() = default;
 	Mercenary(std::string _name, int _life, sf::Vector2i _damage, int _crit,

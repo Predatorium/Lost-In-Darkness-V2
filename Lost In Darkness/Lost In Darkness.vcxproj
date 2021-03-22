@@ -156,11 +156,13 @@
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Fight.cpp" />
     <ClCompile Include="Game_Manager.cpp" />
+    <ClCompile Include="Headquarter.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Mercenary.cpp" />
     <ClCompile Include="Merce_Box.cpp" />
     <ClCompile Include="Monster.cpp" />
+    <ClCompile Include="Monster_Box.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Ressource_Manager.cpp" />
     <ClCompile Include="Skill.cpp" />
@@ -176,10 +178,12 @@
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Fight.h" />
     <ClInclude Include="Game_Manager.h" />
+    <ClInclude Include="Headquarter.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Mercenary.h" />
     <ClInclude Include="Merce_Box.h" />
     <ClInclude Include="Monster.h" />
+    <ClInclude Include="Monster_Box.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Box.h" />
     <ClInclude Include="Ressource_Manager.h" />

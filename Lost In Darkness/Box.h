@@ -12,7 +12,7 @@ protected :
 public :
 	Box() = default;
 	virtual ~Box();
-	virtual T Get_Box(E _find) = 0;
+	virtual T& Get_Box(E _find) = 0;
 };
 
 template<typename E, typename T>

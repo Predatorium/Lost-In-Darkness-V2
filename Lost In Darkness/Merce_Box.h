@@ -7,5 +7,5 @@ class Merce_Box: public Box<Mercenary::Type, Mercenary>
 public :
 	Merce_Box();
 	virtual ~Merce_Box() = default;
-	Mercenary Get_Box(Mercenary::Type _find);
+	Mercenary& Get_Box(Mercenary::Type _find);
 };

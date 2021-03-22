@@ -19,7 +19,7 @@ Merce_Box::Merce_Box()
             20, 20, 20, Mercenary::Type::Sorcier, 0);
 }
 
-Mercenary Merce_Box::Get_Box(Mercenary::Type _find)
+Mercenary& Merce_Box::Get_Box(Mercenary::Type _find)
 {
     return My_Box[_find];
 }
