@@ -7,8 +7,15 @@ Monster::Monster(std::string _name, int _life, sf::Vector2i _damage,
 
 }
 
-Monster::Monster(const Monster& _mercenary, sf::Vector2f _position)
+Monster::Monster(const Monster& _monster, sf::Vector2f _position)
 {
-	*this = _mercenary;
+	*this = _monster;
 	Position = _position;
+}
+
+Monster::Monster(const Monster& _monster)
+{
+	*this = _monster;
+	ID++;
+	Id = ID;
 }

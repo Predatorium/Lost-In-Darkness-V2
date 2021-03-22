@@ -6,6 +6,10 @@ class State_Manager;
 class State
 {
 public:
+	State() = default;
+	State(State_Manager* game, sf::RenderWindow* _window);
+	~State() = default;
+
 	virtual void Pause() = 0;
 	virtual void Resume() = 0;
 
@@ -14,9 +18,6 @@ public:
 	virtual void Display() = 0;
 
 protected:
-	State() = default;
-	State(State_Manager* game, sf::RenderWindow* _window);
-	~State() = default;
 
 	sf::RenderWindow* window;
 	State_Manager* Game;

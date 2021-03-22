@@ -15,5 +15,5 @@ public:
 private:
 	sf::Time DeltaTime;
 	sf::Clock Clock;
-	float DeltaF;
+	float DeltaF{0};
 };

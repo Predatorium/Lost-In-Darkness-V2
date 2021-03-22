@@ -24,8 +24,8 @@ public :
 	void Display(sf::RenderWindow& _window) {}
 
 private:
-	Stat Assign;
-	int Duration;
-	int Power;
+	Stat Assign{Stat::Life_Point};
+	int Duration{0};
+	int Power{0};
 
 };

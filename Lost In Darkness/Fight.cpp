@@ -7,35 +7,34 @@
 Fight::Fight(State_Manager* game, sf::RenderWindow* _window) : State(game, _window)
 {
 	std::list<Mercenary> tmp;
-	tmp.push_back(Me_Box.Get_Box(Mercenary::Type::Assasin));
-	tmp.push_back(Me_Box.Get_Box(Mercenary::Type::Chevalier));
-	tmp.push_back(Me_Box.Get_Box(Mercenary::Type::Pretre));
-	tmp.push_back(Me_Box.Get_Box(Mercenary::Type::Sorcier));
+	tmp.push_back(Mercenary(Me_Box.Get_Box(Mercenary::Type::Assasin)));
+	tmp.push_back(Mercenary(Me_Box.Get_Box(Mercenary::Type::Chevalier)));
+	tmp.push_back(Mercenary(Me_Box.Get_Box(Mercenary::Type::Pretre)));
+	tmp.push_back(Mercenary(Me_Box.Get_Box(Mercenary::Type::Sorcier)));
 	player = Player(tmp);
 
-	Enemy.push_back(Mo_Box.Get_Box(Monster::Type::Ghoul));
-	Enemy.push_back(Mo_Box.Get_Box(Monster::Type::Ghoul));
-	Enemy.push_back(Mo_Box.Get_Box(Monster::Type::Ghoul));
-	Enemy.push_back(Mo_Box.Get_Box(Monster::Type::Ghoul));
+	Enemy.push_back(Monster(Mo_Box.Get_Box(Monster::Type::Ghoul)));
+	Enemy.push_back(Monster(Mo_Box.Get_Box(Monster::Type::Ghoul)));
+	Enemy.push_back(Monster(Mo_Box.Get_Box(Monster::Type::Ghoul)));
+	Enemy.push_back(Monster(Mo_Box.Get_Box(Monster::Type::Ghoul)));
 
 	font = Ressource_Manager::AddAnyRessources<sf::Font>("Vamp");
 	sprite.setTexture(Ressource_Manager::AddAnyRessources<sf::Texture>("Fight"));
 
-	Bouton.push_back(Button(CreateText("Skill : 1", font, 30), 2, { 240 , 850 },
-		sf::Color::White, sf::Color::Transparent, [this] {Skill_Select = 0; return 0; }));
-	Bouton.push_back(Button(CreateText("Skill : 2", font, 30), 2, { Bouton.back().Get_Shape().getPosition().x + 120,
-		Bouton.back().Get_Shape().getPosition().y }, sf::Color::White, sf::Color::Transparent, [this] {Skill_Select = 1; return 0; }));
+	Bouton.push_back(Button(CreateText("Skill : 1", font, 30), CreateRectangle(2.f),
+		{ 240 , 850 }, [this] {Skill_Select = 0; }));
+	Bouton.push_back(Button(CreateText("Skill : 2", font, 30), CreateRectangle(2.f),
+		{ Bouton.back().Get_Shape().getPosition().x + 120,
+		Bouton.back().Get_Shape().getPosition().y }, [this] {Skill_Select = 1; }));
 
 	int i = 1;
-	for (Mercenary& Current : player.Get_Squad())
-	{
+	for (Mercenary& Current : player.Get_Squad()) {
 		Current.Set_Position(960.f - (200.f * i), 665.f);
 		i++;
 	}
 
 	i = 1;
-	for (Monster& Current : Enemy)
-	{
+	for (Monster& Current : Enemy) {
 		Current.Set_Position(960.f + (200.f * i), 665.f);
 		i++;
 	}
@@ -50,17 +49,13 @@ Fight::Fight(State_Manager* game, sf::RenderWindow* _window) : State(game, _wind
 
 void Fight::Turn_Order()
 {
-	for (Mercenary& Current : player.Get_Squad())
-		Current.Res_TurnOrder();
-
-	for (Monster& Current : Enemy)
-		Current.Res_TurnOrder();
+	std::for_each(std::begin(player.Get_Squad()), std::end(player.Get_Squad()), [](Mercenary& m) {m.Res_TurnOrder(); });
+	std::for_each(std::begin(Enemy), std::end(Enemy), [](Monster& m) {m.Res_TurnOrder(); });
 
 	for (Mercenary& Current : player.Get_Squad())
 		for (Mercenary& Current2 : player.Get_Squad())
 			if (Current != Current2)
-				if (Current.Get_Speed() <= Current2.Get_Speed())
-				{
+				if (Current.Get_Speed() <= Current2.Get_Speed()) {
 					if (Current.Get_Speed() == Current2.Get_Speed() && Current.Get_TurnOrder() == Current2.Get_TurnOrder())
 						Current2.Add_TurnOrder();
 					else if (Current.Get_Speed() < Current2.Get_Speed())
@@ -70,8 +65,7 @@ void Fight::Turn_Order()
 	for (Monster& Current : Enemy)
 		for (Monster& Current2 : Enemy)
 			if (Current != Current2)
-				if (Current.Get_Speed() <= Current2.Get_Speed())
-				{
+				if (Current.Get_Speed() <= Current2.Get_Speed()) {
 					if (Current.Get_Speed() == Current2.Get_Speed() && Current.Get_TurnOrder() == Current2.Get_TurnOrder())
 						Current2.Add_TurnOrder();
 					else if (Current.Get_Speed() < Current2.Get_Speed())
@@ -79,8 +73,7 @@ void Fight::Turn_Order()
 				}
 
 	for (Monster& Current : Enemy)
-		for (Mercenary& Current2 : player.Get_Squad())
-		{
+		for (Mercenary& Current2 : player.Get_Squad()) {
 			if (Current.Get_Speed() <= Current2.Get_Speed())
 				Current.Add_TurnOrder();
 			if (Current.Get_Speed() > Current2.Get_Speed())
@@ -96,9 +89,14 @@ void Fight::HandleEvents(sf::Event e)
 		window->close();
 		break;
 	case sf::Event::KeyPressed:
-		if (e.key.code == sf::Keyboard::Key::Escape)
+		switch (e.key.code)
+		{
+		case sf::Keyboard::Key::Escape:
 			Game->PopState();
-
+			break;
+		default:
+			break;
+		}
 		break;
 	default:
 		break;
@@ -112,8 +110,7 @@ void Fight::HandleEvents(sf::Event e)
 
 void Fight::Update(const float& dt)
 {
-	if (turn > Enemy.size() + player.Get_Squad().size())
-	{
+	if (turn > Enemy.size() + player.Get_Squad().size()) {
 		Turn_Order();
 		turn = 1;
 	}
@@ -158,36 +155,26 @@ void Fight::Update(const float& dt)
 								break;
 							}
 				}
-
-				int i = 0;
-				for (Button& Current2 : Bouton)	{
-					Current2.Set_Text(Current.Get_Skill(i).Get_Name());
-					if (Current2.Get_Shape().getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition()))) {
-						Skill_Select = Current2.Update();
-						break;
-					}
-					i++;
-				}
 			}
 
 			int i = 0;
-			for (Button& Current2 : Bouton)	{
-				Current2.Set_Text(Current.Get_Skill(i).Get_Name());
-				Current2.Set_Position(sf::Vector2f(360 + i * 200,850));
+			std::for_each(std::begin(Bouton), std::end(Bouton), [&i, &Current](Button& b) {
+				b.Set_Text(Current.Get_Skill(i).Get_Name());
+				b.Set_Position(sf::Vector2f(360 + i * 200, 850));
+				b.Update(); 
 				i++;
-			}
+				});
 
 			break;
 		}
 
 	for (Monster& Current : Enemy)
-		if (Current.Get_TurnOrder() == turn){
-			if (EffectUpdate == false){
+		if (Current.Get_TurnOrder() == turn) {
+			if (EffectUpdate == false) {
 				Current.Effect_Update();
 				EffectUpdate = true;
 
-				if (Current.Get_Life() == 0)
-				{
+				if (Current.Get_Life() == 0) {
 					Enemy.remove_if([](Monster& m) {return m.Get_Life() == 0; });
 					Turn_Order();
 					break;
@@ -201,8 +188,8 @@ void Fight::Update(const float& dt)
 
 			if (timer > 1.5f){
 				int x = player.Get_Squad().size();
-				for (Mercenary& Current2 : player.Get_Squad()){
-					if (x == Enemy_Selection){
+				for (Mercenary& Current2 : player.Get_Squad()) {
+					if (x == Enemy_Selection) {
 						Current.Attack(Current2, 0);
 						turn++;
 						timer = 0;
@@ -223,30 +210,22 @@ void Fight::Display()
 {
 	window->draw(sprite);
 
-	int i = Enemy.size();
-	for (Monster& Current : Enemy)
-	{
-		if (Current.tmp.getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition())))
-		{
+	for (Monster& Current : Enemy) {
+		if (Current.tmp.getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition()))) {
 			Current.Display(window, sf::Color::Magenta, font);
-			Current.Display_Stat(window, font, { 1680, 850 });
+			Current.Display_Stat(window, font, { 1800, 850 });
 		}
-		else if (Current.Get_TurnOrder() == turn)
-		{
+		else if (Current.Get_TurnOrder() == turn) {
 			Current.Display(window, sf::Color::Cyan, font);
-			Current.Display_Stat(window, font, { 1680, 850 });
+			Current.Display_Stat(window, font, { 1800, 850 });
 		}
 		else
 			Current.Display(window, sf::Color::Red, font);
-		
-		i--;
 	}
 
-	i = player.Get_Squad().size();
-	for (Mercenary& Current : player.Get_Squad())
-	{
-		if (i == Enemy_Selection || Current.tmp.getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition())))
-		{
+	int i = player.Get_Squad().size();
+	for (Mercenary& Current : player.Get_Squad()) {
+		if (i == Enemy_Selection || Current.tmp.getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition()))) {
 			Current.Display(window, sf::Color::Magenta, font);
 			if (i == Enemy_Selection)
 				Current.Display_Stat(window, font, { 120, 850 });
@@ -255,8 +234,8 @@ void Fight::Display()
 		}
 		else
 			Current.Display(window, sf::Color::Blue, font);
-		if (Current.Get_TurnOrder() == turn)
-		{
+
+		if (Current.Get_TurnOrder() == turn) {
 			Current.Display(window, sf::Color::Yellow, font);
 			Current.Display_Stat(window, font, { 120, 850 });
 			if (Skill_Select >= 0)
@@ -266,6 +245,5 @@ void Fight::Display()
 		i--;
 	}
 
-	for (auto current : Bouton)
-		current.Display(window);
+	std::for_each(std::begin(Bouton), std::end(Bouton), [this](Button& b) {b.Display(window); });
 }

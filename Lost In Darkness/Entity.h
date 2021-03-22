@@ -34,3 +34,5 @@ public :
 	virtual void Update() = 0;
 	virtual void Display(sf::RenderWindow* _window) = 0;
 };
+
+static int ID = 0;

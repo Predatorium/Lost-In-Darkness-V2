@@ -12,20 +12,19 @@ Menu::Menu(State_Manager* game, sf::RenderWindow* _window) : State(game, _window
 	font = Ressource_Manager::AddAnyRessources<sf::Font>("MetalMacabre");
 	sprite.setTexture(Ressource_Manager::AddAnyRessources<sf::Texture>("Main_Menu"));
 
-	Title = Button(CreateText("Lost In Darkness", font, 150), 5.f, sf::Vector2f(960, 120), sf::Color::White,
-		sf::Color::Transparent, [] {return 0; });
+	Title = Button(CreateText("Lost In Darkness", font, 150), CreateRectangle(), sf::Vector2f(960, 120), [] {});
 
-	Bouton.push_back(Button(CreateText("New Game", font, 70), 3, sf::Vector2f(480, 530), sf::Color::White,
-		sf::Color::Transparent, [game, _window] {game->PushState<Headquarter>(game, _window); return 0; }));
+	Bouton.push_back(Button(CreateText("New Game", font, 70), CreateRectangle(), sf::Vector2f(480, 530), 
+		[this] {Game->PushState<Headquarter>(Game, window); }));
 
-	Bouton.push_back(Button(CreateText("Load Game", font, 70), 3, sf::Vector2f(480, 658), sf::Color::White,
-		sf::Color::Transparent, [game, _window] {game->ChangeState<Menu>(game, _window); return 0; }));
+	Bouton.push_back(Button(CreateText("Load Game", font, 70), CreateRectangle(), sf::Vector2f(480, 658),
+		[this] {Game->ChangeState<Menu>(Game, window); }));
 
-	Bouton.push_back(Button(CreateText("Option", font, 70), 3, sf::Vector2f(480, 771), sf::Color::White,
-		sf::Color::Transparent, [game, _window] {game->ChangeState<Menu>(game, _window); return 0; }));
+	Bouton.push_back(Button(CreateText("Option", font, 70), CreateRectangle(), sf::Vector2f(480, 771),
+		[this] {Game->ChangeState<Menu>(Game, window); }));
 
-	Bouton.push_back(Button(CreateText("Quit", font, 70), 3, sf::Vector2f(480, 876), sf::Color::White,
-		sf::Color::Transparent, [game, _window] {game->PopState(); return 0; }));
+	Bouton.push_back(Button(CreateText("Quit", font, 70), CreateRectangle(), sf::Vector2f(480, 876),
+		[this] {Game->PopState(); }));
 }
 
 
@@ -46,29 +45,14 @@ void Menu::HandleEvents(sf::Event e)
 
 void Menu::Update(const float& dt)
 {
-	for (Button& Current : Bouton)
-	{
-		if (Current.Get_Shape().getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition())))
-			Current.Set_ColorText(sf::Color::Red);
-		else
-			Current.Set_ColorText(sf::Color::White);
-	}
-
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
-		for (Button& Current : Bouton)
-			if (Current.Get_Shape().getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition())))
-			{
-				Current.Update();
-			}
-
+	std::for_each(std::begin(Bouton), std::end(Bouton), [](Button& b) {b.Update(); });
 }
 
 void Menu::Display()
 {
 	window->draw(sprite);
 
-	for (Button& Current : Bouton)
-		Current.Display(window);
+	std::for_each(std::begin(Bouton), std::end(Bouton), [this](Button& b) {b.Display(window); });
 
 	Title.Display(window);	
 }

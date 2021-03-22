@@ -24,6 +24,13 @@ Mercenary::Mercenary(const Mercenary& _mercenary, sf::Vector2f _position)
 	Position = _position;
 }
 
+Mercenary::Mercenary(const Mercenary& _mercenary)
+{
+	*this = _mercenary;
+	ID++;
+	Id = ID;
+}
+
 void Mercenary::AddSkills_ByType()
 {
 	switch (type)

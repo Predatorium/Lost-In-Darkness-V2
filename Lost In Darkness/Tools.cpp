@@ -21,13 +21,14 @@ sf::Vector2f getMidle(sf::Text& _o)
 		_o.getLocalBounds().top + _o.getLocalBounds().height / 2);
 }
 
-sf::Text CreateText(std::string _text, sf::Font& _font, unsigned _sizeTexte)
+sf::Text CreateText(std::string _text, sf::Font& _font, unsigned charactersize)
 {
-	sf::Text text(_text, _font, _sizeTexte);
+	sf::Text text(_text, _font, charactersize);
+	text.setOrigin(getMidle(text));
 	return text;
 }
 
-sf::RectangleShape CreateRectangle(sf::Vector2f _size, float _outlinesize)
+sf::RectangleShape CreateRectangle(float _outlinesize , sf::Vector2f _size)
 {
 	sf::RectangleShape shape(_size);
 	shape.setOutlineThickness(_outlinesize);

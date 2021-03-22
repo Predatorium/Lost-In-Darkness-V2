@@ -17,6 +17,7 @@ public :
 		int _crit, int _speed, int _dodge, int _protect, Type _type);
 
 	Monster(const Monster& _monster, sf::Vector2f _position);
+	Monster(const Monster& _monster);
 	~Monster() = default;
 
 private :

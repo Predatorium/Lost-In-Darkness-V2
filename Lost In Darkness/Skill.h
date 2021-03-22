@@ -21,8 +21,8 @@ public :
 	void Display(sf::RenderWindow* _window, sf::Font& _font, sf::Vector2f _position);
 
 private:
-	int Percentage_Damage;
-	Effect effect;
-	Type type;
+	int Percentage_Damage{0};
+	Effect effect{};
+	Type type{Type::Ennemy};
 
 };
