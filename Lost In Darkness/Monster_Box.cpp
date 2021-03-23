@@ -1,4 +1,5 @@
 #include "Monster_Box.h"
+#include "Tools.h"
 
 Monster_Box::Monster_Box()
 {
@@ -18,4 +19,18 @@ Monster_Box::Monster_Box()
 Monster& Monster_Box::Get_Box(Monster::Type _find)
 {
 	return My_Box[_find];
+}
+
+Monster& Monster_Box::Rand_Box()
+{
+	int x = irandom(1, 20);
+
+	if (x < 12)
+		x = 1;
+	else if (x < 18)
+		x = 2;
+	else
+		x = 3;
+
+	return My_Box[static_cast<Monster::Type>(x)];
 }

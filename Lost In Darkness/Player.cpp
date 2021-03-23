@@ -1,10 +1,10 @@
 #include "Player.h"
 
-Player::Player(std::list<Mercenary> _squad)
+void Player::Display_Squad(sf::RenderWindow* window, sf::Font& font, sf::Vector2f pos)
 {
-	Current_Squad.clear();
-	for (Mercenary& Current : _squad)
-		Current_Squad.push_back(Current);
-
-	Mercenary_Select = 0;
+	int i = 0;
+	for (auto& Current : Current_Squad) {
+		Current->Display_icone(window, font, { pos.x - (i * 200), pos.y });
+		i++;
+	}
 }

@@ -13,9 +13,12 @@ public :
 	Mercenary(const Mercenary& _mercenary);
 	~Mercenary() = default;
 
+	Type Get_Type() { return type; }
+
 	void AddSkills_ByType();
 	void level_Up();
 	void Update();
+	void Display_icone(sf::RenderWindow* _window, sf::Font& _font, sf::Vector2f _pos);
 
 private :
 	Type type;

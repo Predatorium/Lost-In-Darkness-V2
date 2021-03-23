@@ -1,7 +1,8 @@
 #include "Button.h"
 #include "Tools.h"
 
-Button::Button(sf::Text&& _text, sf::RectangleShape&& _shape, sf::Vector2f _position, std::function<void()> _f)
+Button::Button(sf::Text&& _text, sf::RectangleShape&& _shape, sf::Vector2f _position,
+	std::function<void()> _f)
 	: Texte(_text), Shape{ _shape }
 {
 	Out = sf::Color::White;
@@ -10,6 +11,22 @@ Button::Button(sf::Text&& _text, sf::RectangleShape&& _shape, sf::Vector2f _posi
 	Shape.setSize(sf::Vector2f(Texte.getLocalBounds().width,
 		Texte.getLocalBounds().height));
 	Shape.setFillColor(sf::Color::Transparent);
+	Texte.setOrigin(getMidle(Texte));
+	Shape.setOrigin(getMidle(Shape));
+	Texte.setPosition(sf::Vector2f(_position));
+	Shape.setPosition(_position);
+
+	f = _f;
+}
+
+Button::Button(sf::Text&& _text, sf::RectangleShape&& _shape, sf::Color _color,
+	sf::Vector2f _position, std::function<void()> _f)
+	: Texte(_text), Shape{ _shape }
+{
+	Out = sf::Color::White;
+	In = sf::Color::Red;
+
+	Shape.setFillColor(_color);
 	Texte.setOrigin(getMidle(Texte));
 	Shape.setOrigin(getMidle(Shape));
 	Texte.setPosition(sf::Vector2f(_position));
@@ -47,11 +64,14 @@ bool Button::Update()
 	Set_ColorText(Out);
 	if (Shape.getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition()))) {
 		Set_ColorText(In);
-		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && !Click) {
 			f();
+			Click = true;
 			return true;
 		}
 	}
+	if (!sf::Mouse::isButtonPressed(sf::Mouse::Left))
+		Click = false;
 
 	return false;
 }

@@ -33,7 +33,7 @@ private:
 template<typename T, class ...Args>
 inline void State_Manager::ChangeState(Args ...args)
 {
-	while (!states.empty())
+	if (!states.empty())
 		states.pop();
 
 	states.push(new T(args...));

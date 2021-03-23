@@ -1,6 +1,5 @@
 #include "Character.h"
 #include "Tools.h"
-#include <ranges>
 
 Character::Character(std::string _name, int _life, sf::Vector2i _damage,
 	int _crit, int _speed, int _dodge, int _protect)

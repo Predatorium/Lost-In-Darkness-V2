@@ -12,13 +12,11 @@ Menu::Menu(State_Manager* game, sf::RenderWindow* _window) : State(game, _window
 	font = Ressource_Manager::AddAnyRessources<sf::Font>("MetalMacabre");
 	sprite.setTexture(Ressource_Manager::AddAnyRessources<sf::Texture>("Main_Menu"));
 
-	Title = Button(CreateText("Lost In Darkness", font, 150), CreateRectangle(), sf::Vector2f(960, 120), [] {});
+	Title = CreateText("Lost In Darkness", font, 150);
+	Title.setPosition(960, 120);
 
-	Bouton.push_back(Button(CreateText("New Game", font, 70), CreateRectangle(), sf::Vector2f(480, 530), 
+	Bouton.push_back(Button(CreateText("New Game", font, 70), CreateRectangle(), sf::Vector2f(480, 530),
 		[this] {Game->PushState<Headquarter>(Game, window); }));
-
-	Bouton.push_back(Button(CreateText("Load Game", font, 70), CreateRectangle(), sf::Vector2f(480, 658),
-		[this] {Game->ChangeState<Menu>(Game, window); }));
 
 	Bouton.push_back(Button(CreateText("Option", font, 70), CreateRectangle(), sf::Vector2f(480, 771),
 		[this] {Game->ChangeState<Menu>(Game, window); }));
@@ -45,7 +43,11 @@ void Menu::HandleEvents(sf::Event e)
 
 void Menu::Update(const float& dt)
 {
-	std::for_each(std::begin(Bouton), std::end(Bouton), [](Button& b) {b.Update(); });
+	for (auto it = std::begin(Bouton); it != std::end(Bouton); it++) {
+		if (it->Update()) {
+			break;
+		}
+	}
 }
 
 void Menu::Display()
@@ -54,6 +56,6 @@ void Menu::Display()
 
 	std::for_each(std::begin(Bouton), std::end(Bouton), [this](Button& b) {b.Display(window); });
 
-	Title.Display(window);	
+	window->draw(Title);
 }
 

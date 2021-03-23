@@ -8,7 +8,7 @@ class State
 public:
 	State() = default;
 	State(State_Manager* game, sf::RenderWindow* _window);
-	~State() = default;
+	~State();
 
 	virtual void Pause() = 0;
 	virtual void Resume() = 0;

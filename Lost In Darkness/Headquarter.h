@@ -9,6 +9,7 @@ class Headquarter : public State
 private :
 	std::list<Button> Bouton;
 	std::list<Mercenary> Army;
+	std::list<Button> Army_Button;
 	sf::Font font;
 	Merce_Box Recruitment;
 	Player Joueur;
@@ -18,10 +19,9 @@ public :
 	~Headquarter() = default;
 
 	void Pause() {};
-	void Resume() {};
+	void Resume();
 
 	void HandleEvents(sf::Event e);
 	void Update(const float& dt);
 	void Display();
 };
-

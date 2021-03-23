@@ -32,6 +32,7 @@ sf::RectangleShape CreateRectangle(float _outlinesize , sf::Vector2f _size)
 {
 	sf::RectangleShape shape(_size);
 	shape.setOutlineThickness(_outlinesize);
+	shape.setOrigin(getMidle(shape));
 	return shape;
 }
 

@@ -7,7 +7,10 @@ class Button
 {
 public:
 	Button() = default;
-	Button(sf::Text&& _text, sf::RectangleShape&& _shape, sf::Vector2f _position, std::function<void()> _f);
+	Button(sf::Text&& _text, sf::RectangleShape&& _shape,
+		sf::Vector2f _position, std::function<void()> _f);
+	Button(sf::Text&& _text, sf::RectangleShape&& _shape, sf::Color _color,
+		sf::Vector2f _position, std::function<void()> _f);
 	~Button() = default;
 
 	inline sf::Text& Get_Texte() { return Texte; };
@@ -23,12 +26,13 @@ public:
 	bool Update();
 	void Display(sf::RenderWindow* _window);
 
-private:
+protected:
 	sf::RectangleShape Shape;
 	sf::Text Texte;
 
 	sf::Color Out;
 	sf::Color In;
+	bool Click{ false };
 
 	std::function<void()> f;
 };

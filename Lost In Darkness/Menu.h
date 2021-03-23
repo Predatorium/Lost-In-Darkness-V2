@@ -8,7 +8,7 @@ class Menu : public State
 {
 private :
 	std::list<Button> Bouton;
-	Button Title;
+	sf::Text Title;
 	sf::Font font;
 	sf::Sprite sprite;
 	float timer;

@@ -1,4 +1,6 @@
 #include "Mercenary.h"
+#include "Tools.h"
+#include "Ressource_Manager.h"
 
 Mercenary::Mercenary(std::string _name, int _life, sf::Vector2i _damage, int _crit,
 	int _speed, int _dodge, int _protect, Type _type, int _level)
@@ -72,4 +74,36 @@ void Mercenary::level_Up()
 void Mercenary::Update()
 {
 
+}
+
+void Mercenary::Display_icone(sf::RenderWindow* _window, sf::Font& _font, sf::Vector2f _pos)
+{
+	sf::RectangleShape tmp = CreateRectangle(1, { 100,100 });
+	tmp.setFillColor(sf::Color::Blue);
+	tmp.setPosition(_pos);
+
+	sf::Text tmpt;
+	switch (type)
+	{
+	case Type::Chevalier:
+		tmpt = CreateText("Chevalier", _font, 15);
+		break;
+	case Type::Pretre:
+		tmpt = CreateText("Pretre", _font, 15);
+		break;
+	case Type::Sorcier:
+		tmpt = CreateText("Sorcier", _font, 15);
+		break;
+	case Type::Assasin:
+		tmpt = CreateText("Assasin", _font, 15);
+		break;
+	}
+	tmpt.setPosition(_pos);
+
+	_window->draw(tmp);
+	_window->draw(tmpt);
+
+	if (tmp.getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition()))) {
+		Display_Stat(_window, Ressource_Manager::AddAnyRessources<sf::Font>("Vamp"), { _pos.x,_pos.y + 100 });
+	}
 }

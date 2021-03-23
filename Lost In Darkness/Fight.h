@@ -9,30 +9,24 @@
 class Fight : public State
 {
 private :
-	Player player;
-	std::list <Button> Bouton;
+	Player* player;
+	std::list<Button> Bouton;
 	std::list<Monster> Enemy;
 	sf::Font font;
-	sf::Sprite sprite;
 	float timer;
 	int Enemy_Selection;
 	int turn;
 	int Skill_Select;
 	bool EffectUpdate;
 
-	Merce_Box Me_Box;
 	Monster_Box Mo_Box;
 
-	enum class Etape
-	{
-		Attack,
-		AfDamage,
-	};
+	enum class Etape { Attack, AfDamage, };
 	Etape etape;
 
 public :
-	Fight(State_Manager* game, sf::RenderWindow* _window);
-	~Fight() = default;
+	Fight(State_Manager* game, sf::RenderWindow* _window, Player* joueur);
+	~Fight() { ; }
 
 	void Turn_Order();
 
