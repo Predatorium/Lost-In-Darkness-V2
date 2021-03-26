@@ -37,20 +37,24 @@ void Mercenary::AddSkills_ByType()
 {
 	switch (type)
 	{
-	case Mercenary::Type::Chevalier:
+	case Type::Chevalier:
+		Classe = "Chevalier";
 		Skills[0] = Skill("Impot", 100, Skill::Type::Ennemy, Effect());
 		Skills[1] = Skill("Tranche", 80, Skill::Type::Ennemy, Effect("Saignement", -3, 2, Effect::Stat::Life_Point));
 		break;
-	case Mercenary::Type::Pretre:
+	case Type::Pretre:
+		Classe = "Pretre";
 		Skills[0] = Skill("Purification", 50, Skill::Type::Ennemy, Effect("Purification", -4, 3, Effect::Stat::Life_Point));
 		Skills[1] = Skill("Soin", 0, Skill::Type::Ally, Effect("Soin", 10, 0, Effect::Stat::Life_Point));
 		break;
-	case Mercenary::Type::Sorcier:
+	case Type::Sorcier:
+		Classe = "Sorcier";
 		Skills[0] = Skill("Slow", 75, Skill::Type::Ennemy, Effect("Slow", 70, 2, Effect::Stat::Speed));
 		Skills[1] = Skill("Motivation", 0, Skill::Type::Ally, Effect("Buff_Att", 130, 2, Effect::Stat::Damage));
 		break;
-	case Mercenary::Type::Assasin:
-		Skills[0] = Skill("Assasinat", 120, Skill::Type::Ennemy, Effect());
+	case Type::Assassin:
+		Classe = "Assassin";
+		Skills[0] = Skill("Assassinat", 120, Skill::Type::Ennemy, Effect());
 		Skills[1] = Skill("Poison", 50, Skill::Type::Ennemy, Effect("Poison", -3, 3, Effect::Stat::Life_Point));
 		break;
 	}
@@ -71,11 +75,6 @@ void Mercenary::level_Up()
 	Dodge = Max_Dodge;
 }
 
-void Mercenary::Update()
-{
-
-}
-
 void Mercenary::Display_icone(sf::RenderWindow* _window, sf::Font& _font, sf::Vector2f _pos)
 {
 	sf::RectangleShape tmp = CreateRectangle(1, { 100,100 });
@@ -94,7 +93,7 @@ void Mercenary::Display_icone(sf::RenderWindow* _window, sf::Font& _font, sf::Ve
 	case Type::Sorcier:
 		tmpt = CreateText("Sorcier", _font, 15);
 		break;
-	case Type::Assasin:
+	case Type::Assassin:
 		tmpt = CreateText("Assasin", _font, 15);
 		break;
 	}

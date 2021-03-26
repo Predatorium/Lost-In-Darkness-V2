@@ -123,6 +123,12 @@
     <ClCompile Include="Monster_Box.cpp">
       <Filter>Fichiers sources\Global\Prototype</Filter>
     </ClCompile>
+    <ClCompile Include="Room.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Dungeon.cpp">
+      <Filter>Fichiers sources\State</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Tools.h">
@@ -187,6 +193,12 @@
     </ClInclude>
     <ClInclude Include="Monster_Box.h">
       <Filter>Fichiers d%27en-tête\Global\Prototype</Filter>
+    </ClInclude>
+    <ClInclude Include="Room.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Dungeon.h">
+      <Filter>Fichiers d%27en-tête\State</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

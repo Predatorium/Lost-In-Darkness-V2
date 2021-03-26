@@ -152,6 +152,7 @@
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="Component.cpp" />
+    <ClCompile Include="Dungeon.cpp" />
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Fight.cpp" />
@@ -165,6 +166,7 @@
     <ClCompile Include="Monster_Box.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Ressource_Manager.cpp" />
+    <ClCompile Include="Room.cpp" />
     <ClCompile Include="Skill.cpp" />
     <ClCompile Include="State.cpp" />
     <ClCompile Include="State_Manager.cpp" />
@@ -174,6 +176,7 @@
     <ClInclude Include="Button.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="Component.h" />
+    <ClInclude Include="Dungeon.h" />
     <ClInclude Include="Effect.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Fight.h" />
@@ -187,6 +190,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="Box.h" />
     <ClInclude Include="Ressource_Manager.h" />
+    <ClInclude Include="Room.h" />
     <ClInclude Include="Skill.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="State_Manager.h" />

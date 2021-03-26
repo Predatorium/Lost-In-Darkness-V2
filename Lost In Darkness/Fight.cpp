@@ -7,8 +7,12 @@
 Fight::Fight(State_Manager* game, sf::RenderWindow* _window, Player* joueur) : State(game, _window), player(joueur)
 {
 	int i = irandom(1, 4);
-	for (int x = 0; x < i; x++)
-		Enemy.push_back(Monster(Mo_Box.Rand_Box()));
+	for (int x = 0; x < 4; x++)
+		;
+		
+	Enemy.push_back(Monster(Mo_Box.Get_Box(Monster::Type::Ghoul)));
+	Enemy.push_back(Monster(Mo_Box.Get_Box(Monster::Type::Vampire)));
+	Enemy.push_back(Monster(Mo_Box.Get_Box(Monster::Type::Loup_Garou)));
 
 	font = Ressource_Manager::AddAnyRessources<sf::Font>("Vamp");
 
@@ -92,11 +96,6 @@ void Fight::HandleEvents(sf::Event e)
 	default:
 		break;
 	}
-
-	if (Enemy.size() == 0)
-		Game->PopState();
-	if (player->Get_Squad().size() == 0)
-		Game->PopState();
 }
 
 void Fight::Update(const float& dt)
@@ -195,6 +194,11 @@ void Fight::Update(const float& dt)
 			}
 			break;
 		}
+
+	if (Enemy.size() == 0)
+		Game->PopState();
+	if (player->Get_Squad().size() == 0)
+		Game->PopState();
 }
 
 void Fight::Display()

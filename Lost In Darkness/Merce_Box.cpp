@@ -6,9 +6,9 @@ Merce_Box::Merce_Box()
         Entity::Create<Mercenary>("Robert", 40, sf::Vector2i(8, 11), 5,
             19, 10, 30, Mercenary::Type::Chevalier, 0);
 
-    My_Box[Mercenary::Type::Assasin] =
+    My_Box[Mercenary::Type::Assassin] =
         Entity::Create<Mercenary>("François", 20, sf::Vector2i(17, 20), 25,
-            21, 40, 15, Mercenary::Type::Assasin, 0);
+            21, 40, 15, Mercenary::Type::Assassin, 0);
 
     My_Box[Mercenary::Type::Pretre] =
         Entity::Create<Mercenary>("Francis", 25, sf::Vector2i(15, 20), 10,

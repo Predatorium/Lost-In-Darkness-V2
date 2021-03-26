@@ -17,7 +17,6 @@ Character::Character(std::string _name, int _life, sf::Vector2i _damage,
 	Damage_Save = Damage;
 	Protect = _protect;
 	Turn_Order = 1;
-	Placement = 0;
 
 	tmp = sf::RectangleShape(sf::Vector2f(100, 200));
 	tmp.setOrigin(getMidle(tmp));
@@ -67,6 +66,13 @@ void Character::Add_Dodge(int _dodge)
 		Dodge += _dodge;
 }
 
+void Character::Reset()
+{
+	Restart_Stat();
+	Current_Effect.clear();
+	Life = Max_Life;
+}
+
 void Character::Restart_Stat()
 {
 	Speed = Max_Speed;
@@ -107,8 +113,11 @@ int Character::Attack(Character& c, int _skill)
 	if (dodge <= Dodge)
 		return 0;
 
-	if (Skills[_skill] != Skill())
+	if (Skills[_skill] != Skill()) {
 		c.Current_Effect.push_back(Skills[_skill].Get_Effect());
+		if (Skills[_skill].Get_Effect().Get_Assign() == Effect::Stat::Speed)
+			c.Add_Speed(Get_MaxSpeed() * Pourcentage(Skills[_skill].Get_Effect().Get_Power()));
+	}
 
 	int rand = irandom(Damage.x, Damage.y);
 	if (Skills[_skill] != Skill())
@@ -147,6 +156,10 @@ void Character::Display(sf::RenderWindow* _window, sf::Color _color, sf::Font& _
 {
 	tmp.setFillColor(_color);
 
+	sf::Text tClasse = CreateText(Classe, _font);
+	tClasse.setPosition(Position);
+	tClasse.setFillColor(sf::Color(100,100,100));
+
 	sf::RectangleShape life_Box(sf::Vector2f(100, 20));
 	life_Box.setFillColor(sf::Color::Transparent);
 	life_Box.setOutlineThickness(2);
@@ -162,6 +175,7 @@ void Character::Display(sf::RenderWindow* _window, sf::Color _color, sf::Font& _
 	_window->draw(life_Box);
 	_window->draw(life);
 	_window->draw(tmp);
+	_window->draw(tClasse);
 }
 
 void Character::Display_Stat(sf::RenderWindow* _window, sf::Font& _font, sf::Vector2f _position)

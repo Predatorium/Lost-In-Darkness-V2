@@ -2,7 +2,7 @@
 #include "Ressource_Manager.h"
 #include "Tools.h"
 #include "State_Manager.h"
-#include "Fight.h"
+#include "Dungeon.h"
 
 Headquarter::Headquarter(State_Manager* game, sf::RenderWindow* _window) : State(game, _window)
 {
@@ -31,7 +31,7 @@ Headquarter::Headquarter(State_Manager* game, sf::RenderWindow* _window) : State
 	Bouton.push_back(Button(CreateText("Recrute\nAssasin", font, 20), CreateRectangle(1.f), { 100, 490 },
 		[this] {
 			if (Army.size() < 12) {
-				Army.push_back(Mercenary(Recruitment.Get_Box(Mercenary::Type::Assasin)));
+				Army.push_back(Mercenary(Recruitment.Get_Box(Mercenary::Type::Assassin)));
 				auto* it = &Army.back();
 				Army_Button.push_back(Button(CreateText("Assasin", font, 20),
 					CreateRectangle(1.f, { 120,50 }), sf::Color::Blue, sf::Vector2f(1800, 60 * Army.size()), [this, it] {
@@ -96,16 +96,16 @@ Headquarter::Headquarter(State_Manager* game, sf::RenderWindow* _window) : State
 	Bouton.push_back(Button(CreateText("Dungeon", font, 40), CreateRectangle(1.f), { 960, 1040 },
 		[this] {
 			if (Joueur.Get_Squad().size() >= 2) {
-				Game->PushState<Fight>(Game, window, &Joueur);
+				Game->PushState<Dungeon>(Game, window, &Joueur);
 			}
 		}));
 }
 
 void Headquarter::Resume()
 {
-	Army.erase(std::remove_if(std::begin(Army), std::end(Army), [](Mercenary& value) {
+	Army.remove_if([](Mercenary& value) {
 		return value.Get_Life() == 0;
-		}), std::end(Army));
+		});
 
 	Army_Button.clear();
 
@@ -113,7 +113,7 @@ void Headquarter::Resume()
 	for (Mercenary& Current : Army) {
 		auto* it = &Current;
 		std::string tmp;
-		if (Current.Get_Type() == Mercenary::Type::Assasin)
+		if (Current.Get_Type() == Mercenary::Type::Assassin)
 			tmp = "Assassin";
 		if (Current.Get_Type() == Mercenary::Type::Chevalier)
 			tmp = "Chevalier";

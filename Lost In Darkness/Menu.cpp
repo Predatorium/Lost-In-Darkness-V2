@@ -34,7 +34,14 @@ void Menu::HandleEvents(sf::Event e)
 		window->close();
 		break;
 	case sf::Event::KeyPressed:
-
+		switch (e.key.code)
+		{
+		case sf::Keyboard::Key::Escape:
+			Game->PopState();
+			break;
+		default:
+			break;
+		}
 		break;
 	default:
 		break;

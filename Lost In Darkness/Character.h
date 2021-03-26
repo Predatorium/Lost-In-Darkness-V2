@@ -9,6 +9,8 @@ class Character : public Entity
 protected:
 	std::map<int, Skill> Skills;
 
+	std::string Classe;
+
 	int Max_Life;
 	int Life;
 	sf::Vector2i Damage;
@@ -20,7 +22,6 @@ protected:
 	int Max_Dodge;
 	int Dodge;
 
-	int Placement;
 	int Protect;
 	int Turn_Order;
 
@@ -46,21 +47,18 @@ public :
 	inline int Get_Dodge() { return Dodge; };
 	inline Skill Get_Skill(int key) { return Skills[key]; }
 
-	inline int& Get_Placement() { return Placement; };
 	inline int Get_Protect() { return Protect; };
 	inline int Get_TurnOrder() { return Turn_Order; };
 
 	inline void Res_TurnOrder() { Turn_Order = 1; };
 	inline void Add_TurnOrder() { Turn_Order++; }
 
-	inline void Set_Placement(int _placement) { Placement = _placement; };
-	inline void Attack_Position(float _x, float _y) { sprite.setPosition(_x, _y); };
-
 	int Add_Life(int _life);
 	void Add_Damage(sf::Vector2i _damage);
 	void Add_Speed(int _speed);
 	void Add_Dodge(int _dodge);
 
+	void Reset();
 	void Restart_Stat();
 	int Effect_Update();
 	int Attack(Character& c, int _skill);

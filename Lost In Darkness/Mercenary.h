@@ -4,7 +4,7 @@
 class Mercenary : public Character
 {
 public :
-	enum class Type { Chevalier, Pretre, Sorcier, Assasin, };
+	enum class Type { Chevalier, Pretre, Sorcier, Assassin, };
 
 	Mercenary() = default;
 	Mercenary(std::string _name, int _life, sf::Vector2i _damage, int _crit,
@@ -17,7 +17,6 @@ public :
 
 	void AddSkills_ByType();
 	void level_Up();
-	void Update();
 	void Display_icone(sf::RenderWindow* _window, sf::Font& _font, sf::Vector2f _pos);
 
 private :
