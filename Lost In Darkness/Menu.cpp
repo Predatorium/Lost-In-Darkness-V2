@@ -65,4 +65,3 @@ void Menu::Display()
 
 	window->draw(Title);
 }
-

@@ -123,7 +123,7 @@ void Headquarter::Resume()
 			tmp = "Sorcier";
 
 		Army_Button.push_back(Button(CreateText(tmp, font, 20),
-			CreateRectangle(1.f, { 100,100 }), sf::Vector2f(1800, 50 * i), [this, it] {
+			CreateRectangle(1.f, { 100,100 }), sf::Color::Blue, sf::Vector2f(1800, 50 * i), [this, it] {
 				if (Joueur.Get_Squad().size() < 4)
 					Joueur.AddMercenary(it);
 			}));

@@ -4,15 +4,12 @@
 #include "Menu.h"
 #include "Tools.h"
 
-Fight::Fight(State_Manager* game, sf::RenderWindow* _window, Player* joueur) : State(game, _window), player(joueur)
+Fight::Fight(State_Manager* game, sf::RenderWindow* _window, Player* joueur)
+	: State(game, _window), player(joueur)
 {
-	int i = irandom(1, 4);
+	int i = irandom(2, 4);
 	for (int x = 0; x < 4; x++)
-		;
-		
-	Enemy.push_back(Monster(Mo_Box.Get_Box(Monster::Type::Ghoul)));
-	Enemy.push_back(Monster(Mo_Box.Get_Box(Monster::Type::Vampire)));
-	Enemy.push_back(Monster(Mo_Box.Get_Box(Monster::Type::Loup_Garou)));
+		Enemy.push_back(Monster(Mo_Box.Rand_Box()));
 
 	font = Ressource_Manager::AddAnyRessources<sf::Font>("Vamp");
 
@@ -22,18 +19,15 @@ Fight::Fight(State_Manager* game, sf::RenderWindow* _window, Player* joueur) : S
 		{ Bouton.back().Get_Shape().getPosition().x + 120,
 		Bouton.back().Get_Shape().getPosition().y }, [this] {Skill_Select = 1; }));
 
-	etape = Etape::Attack;
-	turn = Enemy.size() + player->Get_Squad().size() + 1;
-	timer = 0.f;
-	Enemy_Selection = 0;
-	Skill_Select = -1;
-	EffectUpdate = false;
+	Turn_Order();
 }
 
 void Fight::Turn_Order()
 {
-	std::for_each(std::begin(player->Get_Squad()), std::end(player->Get_Squad()), [](Mercenary* m) {m->Res_TurnOrder(); });
-	std::for_each(std::begin(Enemy), std::end(Enemy), [](Monster& m) {m.Res_TurnOrder(); });
+	std::for_each(std::begin(player->Get_Squad()), std::end(player->Get_Squad()),
+		[](Mercenary* m) {m->Turn_Order = 1; });
+	std::for_each(std::begin(Enemy), std::end(Enemy),
+		[](Monster& m) {m.Turn_Order = 1; });
 
 	int i = 1;
 	for (auto Current : player->Get_Squad()) {
@@ -47,33 +41,42 @@ void Fight::Turn_Order()
 		i++;
 	}
 
-	for (Mercenary* Current : player->Get_Squad())
-		for (Mercenary* Current2 : player->Get_Squad())
-			if (Current != Current2)
-				if (Current->Get_Speed() <= Current2->Get_Speed()) {
-					if (Current->Get_Speed() == Current2->Get_Speed() && Current->Get_TurnOrder() == Current2->Get_TurnOrder())
-						Current2->Add_TurnOrder();
-					else if (Current->Get_Speed() < Current2->Get_Speed())
-						Current->Add_TurnOrder();
-				}
-
-	for (Monster& Current : Enemy)
-		for (Monster& Current2 : Enemy)
-			if (Current != Current2)
-				if (Current.Get_Speed() <= Current2.Get_Speed()) {
-					if (Current.Get_Speed() == Current2.Get_Speed() && Current.Get_TurnOrder() == Current2.Get_TurnOrder())
-						Current2.Add_TurnOrder();
-					else if (Current.Get_Speed() < Current2.Get_Speed())
-						Current.Add_TurnOrder();
-				}
-
-	for (Monster& Current : Enemy)
+	for (Mercenary* Current : player->Get_Squad()) {
 		for (Mercenary* Current2 : player->Get_Squad()) {
-			if (Current.Get_Speed() <= Current2->Get_Speed())
-				Current.Add_TurnOrder();
-			if (Current.Get_Speed() > Current2->Get_Speed())
-				Current2->Add_TurnOrder();
+			if (Current != Current2) {
+				if (Current->Speed > Current2->Speed) {
+					Current2->Turn_Order++;
+				}
+				if (Current->Speed == Current2->Speed &&
+					Current->Turn_Order == Current2->Turn_Order) {
+					Current2->Turn_Order++;
+				}
+			}
 		}
+	}
+
+	for (Monster& Current : Enemy) {
+		for (Monster& Current2 : Enemy) {
+			if (Current != Current2) {
+				if (Current.Speed > Current2.Speed) {
+					Current2.Turn_Order++;
+				}
+				if (Current.Speed == Current2.Speed &&
+					Current.Turn_Order == Current2.Turn_Order) {
+					Current2.Turn_Order++;
+				}
+			}
+		}
+	}
+
+	for (Monster& Current : Enemy) {
+		for (Mercenary* Current2 : player->Get_Squad()) {
+			if (Current.Speed <= Current2->Speed)
+				Current.Turn_Order++;
+			if (Current.Speed > Current2->Speed)
+				Current2->Turn_Order++;
+		}
+	}
 }
 
 void Fight::HandleEvents(sf::Event e)
@@ -105,8 +108,8 @@ void Fight::Update(const float& dt)
 		turn = 1;
 	}
 
-	for (Mercenary* Current : player->Get_Squad())
-		if (Current->Get_TurnOrder() == turn) {
+	for (Mercenary* Current : player->Get_Squad()) {
+		if (Current->Turn_Order == turn) {
 			if (EffectUpdate == false) {
 				Current->Effect_Update();
 				EffectUpdate = true;
@@ -157,9 +160,10 @@ void Fight::Update(const float& dt)
 
 			break;
 		}
+	}
 
-	for (Monster& Current : Enemy)
-		if (Current.Get_TurnOrder() == turn) {
+	for (Monster& Current : Enemy) {
+		if (Current.Turn_Order == turn) {
 			if (EffectUpdate == false) {
 				Current.Effect_Update();
 				EffectUpdate = true;
@@ -176,7 +180,7 @@ void Fight::Update(const float& dt)
 			if (Enemy_Selection == 0)
 				Enemy_Selection = irandom(1, player->Get_Squad().size());
 
-			if (timer > 1.5f){
+			if (timer > 2.5f){
 				int x = player->Get_Squad().size();
 				for (Mercenary* Current2 : player->Get_Squad()) {
 					if (x == Enemy_Selection) {
@@ -194,6 +198,7 @@ void Fight::Update(const float& dt)
 			}
 			break;
 		}
+	}
 
 	if (Enemy.size() == 0)
 		Game->PopState();
@@ -208,7 +213,7 @@ void Fight::Display()
 			Current.Display(window, sf::Color::Magenta, font);
 			Current.Display_Stat(window, font, { 1800, 850 });
 		}
-		else if (Current.Get_TurnOrder() == turn) {
+		else if (Current.Turn_Order == turn) {
 			Current.Display(window, sf::Color::Cyan, font);
 			Current.Display_Stat(window, font, { 1800, 850 });
 		}
@@ -228,7 +233,7 @@ void Fight::Display()
 		else
 			Current->Display(window, sf::Color::Blue, font);
 
-		if (Current->Get_TurnOrder() == turn) {
+		if (Current->Turn_Order == turn) {
 			Current->Display(window, sf::Color::Yellow, font);
 			Current->Display_Stat(window, font, { 120, 850 });
 			if (Skill_Select >= 0)

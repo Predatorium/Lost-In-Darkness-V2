@@ -18,12 +18,10 @@ protected:
 	int CR_Max;
 	int Critical_Rate;
 	int Max_Speed;
-	int Speed;
 	int Max_Dodge;
 	int Dodge;
 
 	int Protect;
-	int Turn_Order;
 
 	std::list<Effect> Current_Effect;
 
@@ -34,6 +32,8 @@ public :
 	~Character() = default;
 
 	sf::RectangleShape tmp;
+	int Speed;
+	int Turn_Order;
 
 	inline int Get_MaxLife() { return Max_Life; };
 	inline int Get_Life() { return Life; };
@@ -42,16 +42,11 @@ public :
 	inline int Get_CRMax() { return CR_Max; };
 	inline int Get_CriticalRate() { return Critical_Rate; };
 	inline int Get_MaxSpeed() { return Max_Speed; };
-	inline int Get_Speed() { return Speed; };
 	inline int Get_MaxDodge() { return Max_Dodge; };
 	inline int Get_Dodge() { return Dodge; };
 	inline Skill Get_Skill(int key) { return Skills[key]; }
 
 	inline int Get_Protect() { return Protect; };
-	inline int Get_TurnOrder() { return Turn_Order; };
-
-	inline void Res_TurnOrder() { Turn_Order = 1; };
-	inline void Add_TurnOrder() { Turn_Order++; }
 
 	int Add_Life(int _life);
 	void Add_Damage(sf::Vector2i _damage);
