@@ -8,7 +8,7 @@ Headquarter::Headquarter(State_Manager* game, sf::RenderWindow* _window) : State
 {
 	font = Ressource_Manager::AddAnyRessources<sf::Font>("MetalMacabre");
 
-	Bouton.push_back(Button(CreateText("Recrute\nChevalier", font, 20), CreateRectangle(1.f), { 100, 390 },
+	Bouton.push_back(Button(CreateText("Recrute\nChevalier", font, 20), CreateRectangle(1.f, {150,50}), sf::Color(150, 150, 150), { 100, 390 },
 		[this] {
 			if (Army.size() < 12) {
 				Army.push_back(Mercenary(Recruitment.Get_Box(Mercenary::Type::Chevalier)));
@@ -28,7 +28,7 @@ Headquarter::Headquarter(State_Manager* game, sf::RenderWindow* _window) : State
 			}
 		}));
 
-	Bouton.push_back(Button(CreateText("Recrute\nAssasin", font, 20), CreateRectangle(1.f), { 100, 490 },
+	Bouton.push_back(Button(CreateText("Recrute\nAssasin", font, 20), CreateRectangle(1.f, { 150,50 }), sf::Color(150, 150, 150), { 100, 490 },
 		[this] {
 			if (Army.size() < 12) {
 				Army.push_back(Mercenary(Recruitment.Get_Box(Mercenary::Type::Assassin)));
@@ -48,7 +48,7 @@ Headquarter::Headquarter(State_Manager* game, sf::RenderWindow* _window) : State
 			}
 		}));
 
-	Bouton.push_back(Button(CreateText("Recrute\nPretre", font, 20), CreateRectangle(1.f), { 100, 590 },
+	Bouton.push_back(Button(CreateText("Recrute\nPretre", font, 20), CreateRectangle(1.f, { 150,50 }), sf::Color(150, 150, 150), { 100, 590 },
 		[this] {
 			if (Army.size() < 12) {
 				Army.push_back(Mercenary(Recruitment.Get_Box(Mercenary::Type::Pretre)));
@@ -68,7 +68,7 @@ Headquarter::Headquarter(State_Manager* game, sf::RenderWindow* _window) : State
 			}
 		}));
 
-	Bouton.push_back(Button(CreateText("Recrute\nSorcier", font, 20), CreateRectangle(1.f), { 100, 690 },
+	Bouton.push_back(Button(CreateText("Recrute\nSorcier", font, 20), CreateRectangle(1.f, { 150,50 }), sf::Color(150, 150, 150), { 100, 690 },
 		[this] {
 			if (Army.size() < 12) {
 				Army.push_back(Mercenary(Recruitment.Get_Box(Mercenary::Type::Sorcier)));
@@ -88,12 +88,12 @@ Headquarter::Headquarter(State_Manager* game, sf::RenderWindow* _window) : State
 			}
 		}));
 
-	Bouton.push_back(Button(CreateText("Clear\nSquad", font, 20), CreateRectangle(1.f), { 50, 50 },
+	Bouton.push_back(Button(CreateText("Clear\nSquad", font, 20), CreateRectangle(1.f, { 150,50 }), sf::Color(150, 150, 150), { 50, 50 },
 		[this] {
 			Joueur.Get_Squad().clear();
 		}));
 
-	Bouton.push_back(Button(CreateText("Dungeon", font, 40), CreateRectangle(1.f), { 960, 1040 },
+	Bouton.push_back(Button(CreateText("Dungeon", font, 60), CreateRectangle(1.f), sf::Color(150, 150, 150), { 960, 1040 },
 		[this] {
 			if (Joueur.Get_Squad().size() >= 2) {
 				Game->PushState<Dungeon>(Game, window, &Joueur);
