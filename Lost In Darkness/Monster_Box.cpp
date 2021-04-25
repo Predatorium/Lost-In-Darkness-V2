@@ -12,7 +12,7 @@ Monster_Box::Monster_Box()
 			8, 25, 10, 20, Monster::Type::Vampire);
 
 	My_Box[Monster::Type::Loup_Garou] =
-		Entity::Create<Monster>("Loup_Garou", 40, sf::Vector2i(11, 15),
+		Entity::Create<Monster>("WereWolf", 40, sf::Vector2i(11, 15),
 			12, 17, 2, 35, Monster::Type::Loup_Garou);
 }
 
@@ -21,13 +21,41 @@ Monster& Monster_Box::Get_Box(Monster::Type _find)
 	return My_Box[_find];
 }
 
-Monster& Monster_Box::Rand_Box()
+Monster& Monster_Box::Rand_BoxEasy()
 {
-	int x = irandom(1, 20);
+	int x = irandom(1, 100);
 
-	if (x <= 12)
+	if (x <= 75)
 		x = 0;
-	else if (x <= 18)
+	else if (x <= 90)
+		x = 1;
+	else
+		x = 2;
+
+	return My_Box[static_cast<Monster::Type>(x)];
+}
+
+Monster& Monster_Box::Rand_BoxNormal()
+{
+	int x = irandom(1, 100);
+
+	if (x <= 60)
+		x = 0;
+	else if (x <= 85)
+		x = 1;
+	else
+		x = 2;
+
+	return My_Box[static_cast<Monster::Type>(x)];
+}
+
+Monster& Monster_Box::Rand_BoxHard()
+{
+	int x = irandom(1, 100);
+
+	if (x <= 40)
+		x = 0;
+	else if (x <= 75)
 		x = 1;
 	else
 		x = 2;

@@ -31,7 +31,7 @@ void Monster::AddSkills_ByType()
 		Classe = "Vampire";
 		break;
 	case Type::Loup_Garou:
-		Classe = "Loup_Garou";
+		Classe = "WereWolf";
 		break;
 	default:
 		break;

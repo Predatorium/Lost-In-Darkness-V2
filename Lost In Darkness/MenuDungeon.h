@@ -2,19 +2,19 @@
 #include "SFML/Graphics.hpp"
 #include "Button.h"
 #include "State.h"
+#include "Player.h"
 #include <list>
 
-class Menu : public State
+class MenuDungeon : public State
 {
-private :
+private:
 	std::list<Button> Bouton;
-	sf::Text Title;
 	sf::Font font;
-	sf::Sprite sprite;
+	bool Arrive{ false };
 
-public :
-	Menu(State_Manager* game, sf::RenderWindow* _window);
-	~Menu() = default;
+public:
+	MenuDungeon(State_Manager* game, sf::RenderWindow* _window, Player* joueur);
+	~MenuDungeon() = default;
 
 	void Pause() {};
 	void Resume() {};

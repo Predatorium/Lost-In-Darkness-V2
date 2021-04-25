@@ -129,6 +129,9 @@
     <ClCompile Include="Dungeon.cpp">
       <Filter>Fichiers sources\State</Filter>
     </ClCompile>
+    <ClCompile Include="MenuDungeon.cpp">
+      <Filter>Fichiers sources\State</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Tools.h">
@@ -198,6 +201,9 @@
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="Dungeon.h">
+      <Filter>Fichiers d%27en-tête\State</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuDungeon.h">
       <Filter>Fichiers d%27en-tête\State</Filter>
     </ClInclude>
   </ItemGroup>

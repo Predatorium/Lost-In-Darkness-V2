@@ -12,12 +12,15 @@ private:
 	std::vector<Room> Salle;
 	int CurrentRoom{ 0 };
 	sf::Font font;
+	sf::Text text;
+	int Difficult;
 	Button Back;
 	Button Next;
 
 public:
 	Dungeon(State_Manager* game,
-		sf::RenderWindow* _window, Player* joueur);
+		sf::RenderWindow* _window, Player* joueur,
+		int Difficulté = 1);
 	~Dungeon() { ; }
 
 	void Pause() { ; }

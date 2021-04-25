@@ -129,7 +129,9 @@ int Character::Attack(Character& c, int _skill)
 	if (RandCrit <= Critical_Rate)
 		rand *= 2;
 
-	return c.Add_Life(-rand);
+	c.Add_Life(-rand);
+
+	return rand;
 }
 
 int Character::Buff(Character& c, int _skill)

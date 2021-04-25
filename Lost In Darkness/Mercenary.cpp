@@ -31,6 +31,7 @@ Mercenary::Mercenary(const Mercenary& _mercenary)
 	*this = _mercenary;
 	ID++;
 	Id = ID;
+	Name += " " + std::to_string(Id);
 }
 
 void Mercenary::AddSkills_ByType()
@@ -38,23 +39,23 @@ void Mercenary::AddSkills_ByType()
 	switch (type)
 	{
 	case Type::Chevalier:
-		Classe = "Chevalier";
-		Skills[0] = Skill("Impot", 100, Skill::Type::Ennemy, Effect());
-		Skills[1] = Skill("Tranche", 80, Skill::Type::Ennemy, Effect("Saignement", -3, 2, Effect::Stat::Life_Point));
+		Classe = "Knight";
+		Skills[0] = Skill("Tax", 100, Skill::Type::Ennemy, Effect());
+		Skills[1] = Skill("Slice", 80, Skill::Type::Ennemy, Effect("Saignement", -3, 2, Effect::Stat::Life_Point));
 		break;
 	case Type::Pretre:
-		Classe = "Pretre";
-		Skills[0] = Skill("Purification", 50, Skill::Type::Ennemy, Effect("Purification", -4, 3, Effect::Stat::Life_Point));
-		Skills[1] = Skill("Soin", 0, Skill::Type::Ally, Effect("Soin", 10, 0, Effect::Stat::Life_Point));
+		Classe = "Priest";
+		Skills[0] = Skill("Cleaning", 50, Skill::Type::Ennemy, Effect("Purification", -4, 3, Effect::Stat::Life_Point));
+		Skills[1] = Skill("Heal", 0, Skill::Type::Ally, Effect("Soin", 10, 0, Effect::Stat::Life_Point));
 		break;
 	case Type::Sorcier:
-		Classe = "Sorcier";
+		Classe = "Wizar";
 		Skills[0] = Skill("Slow", 75, Skill::Type::Ennemy, Effect("Slow", 70, 2, Effect::Stat::Speed));
-		Skills[1] = Skill("Motivation", 0, Skill::Type::Ally, Effect("Buff_Att", 130, 2, Effect::Stat::Damage));
+		Skills[1] = Skill("Calling", 0, Skill::Type::Ally, Effect("Buff_Att", 130, 2, Effect::Stat::Damage));
 		break;
 	case Type::Assassin:
 		Classe = "Assassin";
-		Skills[0] = Skill("Assassinat", 120, Skill::Type::Ennemy, Effect());
+		Skills[0] = Skill("Murder", 120, Skill::Type::Ennemy, Effect());
 		Skills[1] = Skill("Poison", 50, Skill::Type::Ennemy, Effect("Poison", -3, 3, Effect::Stat::Life_Point));
 		break;
 	}

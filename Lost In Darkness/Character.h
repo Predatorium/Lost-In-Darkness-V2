@@ -45,6 +45,7 @@ public :
 	inline int Get_MaxDodge() { return Max_Dodge; };
 	inline int Get_Dodge() { return Dodge; };
 	inline Skill Get_Skill(int key) { return Skills[key]; }
+	inline void EffectClear() { Current_Effect.clear(); Restart_Stat(); }
 
 	inline int Get_Protect() { return Protect; };
 

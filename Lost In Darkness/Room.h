@@ -3,7 +3,7 @@
 class Room
 {
 public :
-	enum class Event { Rien, Combat };
+	enum class Event { Rien, Combat, Soin };
 	Room() = default;
 	Room(Event _event) : eEvent{ _event } {};
 	~Room() = default;

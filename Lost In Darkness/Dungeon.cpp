@@ -4,13 +4,48 @@
 #include "Fight.h"
 #include "State_Manager.h"
 
-Dungeon::Dungeon(State_Manager* game, sf::RenderWindow* _window, Player* joueur) : State(game, _window), player(joueur)
+Dungeon::Dungeon(State_Manager* game, sf::RenderWindow* _window, Player* joueur, int Difficulté) 
+	: State(game, _window), player(joueur), Difficult(Difficulté)
 {
+	text = CreateText("", font, 50);
+	text.setPosition(960, 500);
+
 	font = Ressource_Manager::AddAnyRessources<sf::Font>("Vamp");
 	Back = Button(CreateText("Back", font), CreateRectangle(1, { 75,50 }), sf::Color::Blue,
-		{ 200,480 }, [this] { if (CurrentRoom > 0) CurrentRoom--; });
+		{ 200,480 }, [this] {
+			if (CurrentRoom > 0)
+				CurrentRoom--; 
+
+			if (Salle[CurrentRoom].Get_Event() == Room::Event::Rien) {
+				text.setString("This room is uninteresting.");
+			}
+			if (Salle[CurrentRoom].Get_Event() == Room::Event::Soin) {
+				text.setString("A higher entity has healed us.");
+			}
+			if (Salle[CurrentRoom].Get_Event() == Room::Event::Combat) {
+				text.setString("We clean up the vermin.");
+			}
+			text.setOrigin(getMidle(text));
+		}
+	);
 	Next = Button(CreateText("Next", font), CreateRectangle(1, { 75,50 }), sf::Color::Blue,
-		{ 1720,480 }, [this] { if (CurrentRoom < Salle.size()) CurrentRoom++; });
+		{ 1720,480 }, [this] {
+			if (CurrentRoom < Salle.size()) 
+				CurrentRoom++; 
+
+			if (Salle[CurrentRoom].Get_Event() == Room::Event::Rien) {
+				text.setString("This room is uninteresting.");
+			}
+			if (Salle[CurrentRoom].Get_Event() == Room::Event::Soin) {
+				text.setString("A higher entity has healed us.");
+			}
+			if (Salle[CurrentRoom].Get_Event() == Room::Event::Combat) {
+				text.setString("We clean up the vermin.");
+			}
+
+			text.setOrigin(getMidle(text));
+		}
+	);
 
 	int i = 1;
 	for (auto Current : player->Get_Squad()) {
@@ -20,9 +55,21 @@ Dungeon::Dungeon(State_Manager* game, sf::RenderWindow* _window, Player* joueur)
 
 	int rand = irandom(5, 7);
 	for (int x = 0; x < rand; x++) {
-		int rand2 = irandom(1, 2);
+		int rand2 = irandom(1, 3);
 		Salle.push_back(Room(static_cast<Room::Event>(rand2 - 1)));
 	}
+
+	if (Salle[CurrentRoom].Get_Event() == Room::Event::Rien) {
+		text.setString("This room is uninteresting.");
+	}
+	if (Salle[CurrentRoom].Get_Event() == Room::Event::Soin) {
+		text.setString("A higher entity has healed us.");
+	}
+	if (Salle[CurrentRoom].Get_Event() == Room::Event::Combat) {
+		text.setString("We clean up the vermin.");
+	}
+
+	text.setOrigin(getMidle(text));
 }
 
 void Dungeon::Resume()
@@ -68,7 +115,12 @@ void Dungeon::Update(const float& dt)
 
 	if (CurrentRoom < Salle.size()) {
 		if (Salle[CurrentRoom].Get_Event() == Room::Event::Combat) {
-			Game->PushState<Fight>(Game, window, player);
+			Game->PushState<Fight>(Game, window, player, Difficult);
+		}
+		if (Salle[CurrentRoom].Get_Event() == Room::Event::Soin) {
+			for (auto* Current : player->Get_Squad()) {
+				Current->Reset();
+			}
 		}
 	}
 
@@ -99,4 +151,6 @@ void Dungeon::Display()
 		"/" + std::to_string(Salle.size()), font, 50);
 	tmp.setPosition(960, 50);
 	window->draw(tmp);
+
+	window->draw(text);
 }

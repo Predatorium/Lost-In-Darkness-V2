@@ -7,8 +7,6 @@
 Menu::Menu(State_Manager* game, sf::RenderWindow* _window) : State(game, _window)
 {
 	Bouton.clear();
-	Selection = 0;
-	timer = 0;
 	font = Ressource_Manager::AddAnyRessources<sf::Font>("MetalMacabre");
 	sprite.setTexture(Ressource_Manager::AddAnyRessources<sf::Texture>("Main_Menu"));
 
@@ -24,7 +22,6 @@ Menu::Menu(State_Manager* game, sf::RenderWindow* _window) : State(game, _window
 	Bouton.push_back(Button(CreateText("Quit", font, 70), CreateRectangle(), sf::Vector2f(480, 876),
 		[this] {Game->PopState(); }));
 }
-
 
 void Menu::HandleEvents(sf::Event e)
 {

@@ -6,7 +6,6 @@ class Entity
 {
 protected :
 	std::string Name;
-	sf::Sprite sprite;
 	sf::Vector2f Position;
 	int Id;
 
@@ -23,13 +22,12 @@ public :
 
 	inline sf::Vector2f Get_Position() { return Position; }
 	inline std::string Get_Name() { return Name; }
-	inline sf::Sprite Get_Sprite() { return sprite; }
 
-	inline void Set_Position(float _x, float _y) { Position = sf::Vector2f(_x, _y); sprite.setPosition(Position); }
-	inline void Set_Position(sf::Vector2f _position) { Position = _position; sprite.setPosition(Position); }
+	inline void Set_Position(float _x, float _y) { Position = sf::Vector2f(_x, _y); }
+	inline void Set_Position(sf::Vector2f _position) { Position = _position; }
 	inline void Set_Name(std::string _name) { Name = _name; }
 
-	inline void Add_Position(float _x, float _y) { Position.x += _x; Position.y += _y; sprite.setPosition(Position); }
+	inline void Add_Position(float _x, float _y) { Position.x += _x; Position.y += _y; }
 
 	virtual void Update() = 0;
 	virtual void Display(sf::RenderWindow* _window) = 0;
